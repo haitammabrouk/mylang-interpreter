@@ -19,6 +19,7 @@ const (
 	IF = "IF"
 	ELSE = "ELSE"
 	RETURN = "RETURN"
+	NULL = "NULL"
 
 	// operators
 	PLUS = "+"
@@ -33,6 +34,8 @@ const (
 	GT = ">"
 	EQ = "=="
 	NOT_EQ = "!="
+	LE = "<="
+	GE = ">="
 
 	//Delimiters
 	COMMA = ","
@@ -56,6 +59,7 @@ var keywords = map[string]TokenType {
 	"true" : TRUE,
 	"false" : FALSE,
 	"return" : RETURN,
+	"null" : NULL,
 }
 
 // a function to check if the literal is either an identifier or a keyword
