@@ -27,6 +27,7 @@ const (
 	MINUS = "-"
 	ASTERISK = "*"
 	SLASH = "/"
+	PERCENT = "%"
 	BANG = "!"
 
 	//Comparison operators
