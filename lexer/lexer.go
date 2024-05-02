@@ -46,12 +46,19 @@ func (l *Lexer) NextToken() token.Token {
 	case ',' :
 		tok = newToken(token.COMMA, l.ch)
 	case '{' :
-		tok = newToken(token.RBRACE, l.ch)
+		tok = newToken(token.LBRACE, l.ch)
 	case '}' :
 		tok = newToken(token.RBRACE, l.ch)
 	case 0 :
 		tok.Literal = ""
 		tok.Type = token.EOF
+	default :
+		if isLetter(l.ch) {
+			tok.Literal = l.readIdentifier()
+			return tok
+		} else {
+			tok = newToken(token.ILLEGAL, l.ch)
+		}
 	}
 
 	l.readChar()
@@ -60,4 +67,18 @@ func (l *Lexer) NextToken() token.Token {
 
 func newToken(tokenType token.TokenType, ch byte) token.Token {
 	return token.Token{Type: tokenType, Literal: string(ch)}
+}
+
+// Read the rest of the identifier or keyword until we encounter a non letter character
+func (l *Lexer) readIdentifier() string {
+	position := l.position
+	for isLetter(l.ch) {
+		l.readChar()
+	}
+	return l.input[position:l.position]
+}
+
+// check if the current char is a letter
+func isLetter(ch byte) bool {
+	return 'a' <= ch && ch >= 'z' || 'A' <= ch && ch >= 'Z' || ch == '_'
 }
