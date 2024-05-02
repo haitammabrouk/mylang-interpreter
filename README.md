@@ -15,11 +15,11 @@ This interpreter consists of three main components: lexer, parser, and evaluator
 - **Braces**: '{' and '}'.
 - **Keywords**: if, else, let, fn, true, false, return , null ...
 
+The Work is not completed yet i'm planning to work on the parser part 
+
 ## Usage
 
 To run the lexer:
 
 ```bash
 go run main.go
-
-The Work is not completed yet i'm planning to work on the parser part 
