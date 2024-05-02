@@ -32,6 +32,8 @@ func (l *Lexer) readChar() {
 func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
 
+	l.skipWhiteSpace()
+
 	switch l.ch {
 	case '=' :
 		tok = newToken(token.ASSIGN, l.ch)
@@ -55,6 +57,11 @@ func (l *Lexer) NextToken() token.Token {
 	default :
 		if isLetter(l.ch) {
 			tok.Literal = l.readIdentifier()
+			tok.Type = token.LookupIdent(tok.Literal)
+			return tok
+		} else if isDigit(l.ch) {
+			tok.Literal = l.readNumber()
+			tok.Type = token.INT
 			return tok
 		} else {
 			tok = newToken(token.ILLEGAL, l.ch)
@@ -81,4 +88,25 @@ func (l *Lexer) readIdentifier() string {
 // check if the current char is a letter
 func isLetter(ch byte) bool {
 	return 'a' <= ch && ch >= 'z' || 'A' <= ch && ch >= 'Z' || ch == '_'
+}
+
+// Read the rest of the number and turn into token
+func (l *Lexer) readNumber() string {
+	position := l.position
+	for isDigit(l.ch) {
+		l.readChar()
+	}
+	return l.input[position:l.position]
+}
+
+// check if the current char is a digit
+func isDigit(ch byte) bool {
+	return '0' <= ch && ch <= '9'
+}
+
+// whitespaces are considered just delimiters so they dont have any meaning
+func (l *Lexer) skipWhiteSpace() {
+	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
+		l.readChar()
+	}
 }
