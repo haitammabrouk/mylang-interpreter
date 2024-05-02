@@ -15,9 +15,13 @@ const (
 	IDENT = "IDENT"
 	INT = "INT"
 
-	// delimiters
+	// operators
 	PLUS = "+"
 	ASSIGN = "="
+
+	//Delimiters
+	COMMA = ","
+	SEMICOLON = ";"
 
 	LPAREN = "("
 	RPAREN = ")"
